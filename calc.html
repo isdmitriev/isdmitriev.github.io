@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        window.onload = function ()
+        {
+            var previouval = 0;
+            var display = document.getElementById("result");
+            display.innerText = previouval;
+            form1.elements[0].value = 0;
+            var operation = null;
+            var op = document.getElementsByTagName("input");
+            for (i = 0; i < op.length; i++)
+            {
+                if (op[i].getAttribute("type") =="button" && op[i].getAttribute("class")!="hiden"){
+                
+                    op[i].onclick=function()
+                    {
+                          createop(this.value);
+                       
+                       }
+                }
+            }
+
+         function createop(typeop)
+            {
+
+
+             if (typeop == "sqrt") {
+                    var vaSqrt = form1.elements[0].value;
+                    form1.elements[0].value = getSqrt(form1.elements[0].value);
+                    display.innerText ="sqrt("+vaSqrt+")="+form1.elements[0].value;
+                }
+             else {
+                  
+
+            if (operation == null) {
+                        display.innerText = form1.elements[0].value + typeop;
+                        var curval = form1.elements[0].value;
+                        previouval = curval;
+                        operation = typeop;
+                        form1.elements[0].value = 0;
+                    }
+
+                   }
+            }
+
+            var res = document.getElementById("==");
+            res.onclick = function ()
+            {
+             
+                if (operation != null) {
+                    var lastval = form1.elements[0].value;
+                    var result = getresult(previouval, lastval, operation);
+                    form1.elements[0].value = result;
+                    var display = document.getElementById("result");
+                    display.innerText = display.innerText + "=" + result;
+                    operation = null;
+
+                     }
+
+            }
+            function getresult(a,b,c)
+            {
+                if (operation == "+")
+                {
+                    operation = null;
+                    return parseFloat(a) + parseFloat(b);
+                }
+                if (operation == "-")
+                {
+                    operation = null;
+                    return parseFloat(a) - parseFloat(b);
+                }
+
+                if (operation == "/") {
+                    operation = null;
+                    return parseFloat(a)/ parseFloat(b);
+                }
+
+                if (operation == "*") {
+                    operation = null;
+                    return parseFloat(a) * parseFloat(b);
+                }
+
+             }
+            function getSqrt(a)
+            {
+               return Math.round( this.Math.sqrt(a));
+            }
+
+            var reset1 = document.getElementById("reset");
+            reset1.onclick = reset;
+            function reset()
+            {
+                previouval = 0;
+                operation = null;
+                form1.elements[0].value = "0";
+                document.getElementById("result").innerText = "0";
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="form1">
+        <input type="text" name="variable" id="val" readonly="readonly"  />
+        <table>
+            <tr>
+                <td>
+                    input:
+                </td>
+                <td id="result">
+                    
+                </td>
+            </tr>
+        </table>
+        <fieldset>
+            <legend>
+                Choose operation:
+            </legend>
+            <table>
+                <tr>
+                    <td>
+                        <input type="button" value="+" id="plus" />
+                    </td>
+                    <td>
+                        <input type="button" value="-" id="sub" />
+                    </td>
+                    <td>
+                        <input type="button" value="*" id="mul" />
+                    </td>
+                    <td>
+                        <input type="button" value="/" id="div" />
+                    </td>
+                    <td>
+                        <input type="button" value="sqrt" id="sqr" />
+                    </td>
+                    <td>
+                        <input type="button" value="=" id="==" />
+                    </td>
+                    <td>
+                        <input type="button" value="reset" id="reset" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                Input data:
+            </legend>
+           <table>
+               <tr>
+                   <td>
+                       <input type="button" value="0" class="hiden" onclick="on(this);" />
+                   </td>
+                   <td>
+                       <input type="button" value="1" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="2" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="3" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="4" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="5" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="6" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="7" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="8" onclick="on(this);" class="hiden" />
+                   </td>
+                   <td>
+                       <input type="button" value="9" onclick="on(this);" class="hiden" />
+                   </td>
+               </tr>
+           </table>
+        </fieldset>
+
+       </form>
+    <script type="text/javascript">
+        function on(inp)
+        {
+        var str = document.getElementById("result").innerText;
+            var f = str.indexOf("=") > -1;
+            if (f == true) {
+                document.getElementById("result").innerText =inp.value;
+                form1.elements[0].value =inp.value;
+              }
+            else {
+
+                var curentvalue = form1.elements[0].value;
+                if (curentvalue == "0") {
+                    curentvalue = null;
+
+                }
+
+                curentvalue = curentvalue + parseFloat(inp.value);
+
+                form1.elements[0].value = curentvalue;
+
+                var display = document.getElementById("result");
+
+                if (display.innerText == "0") {
+                    display.innerText = parseFloat(inp.value);
+                }
+                else {
+                    display.innerText = display.innerText + parseFloat(inp.value);
+                }
+            }
+            }
+       
+    </script>
+</body>
+
+</html>
